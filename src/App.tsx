@@ -87,7 +87,7 @@ function App() {
 
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/aigrego/claude-code-best-practice-site"
+              href="https://github.com/shanraisshan/claude-code-best-practice"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-400/10 text-cyan-400 hover:bg-cyan-400/20 transition-colors text-sm"
