@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Sidebar from './components/Sidebar';
 import Content from './components/Content';
-import { Zap, ExternalLink } from 'lucide-react';
+import { Zap, ExternalLink, Sun, Moon } from 'lucide-react';
+import { useTheme } from './contexts/ThemeContext.tsx';
 
 function App() {
   const [activeId, setActiveId] = useState('overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -18,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen w-screen overflow-hidden bg-[#0a0a0f] text-gray-100 flex">
+    <div className="h-screen w-screen overflow-hidden bg-bg-primary text-text-primary flex transition-colors duration-300">
       {/* Animated background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {/* Grid pattern */}
@@ -71,26 +73,41 @@ function App() {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col relative">
         {/* Header */}
-        <header className="h-16 border-b border-cyan-400/20 bg-[#12121a]/80 backdrop-blur flex items-center justify-between px-6">
+        <header className="h-16 border-b border-border bg-bg-secondary/80 backdrop-blur flex items-center justify-between px-6 transition-colors duration-300">
           <div className="flex items-center gap-4">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               className="flex items-center gap-2"
             >
-              <Zap className="text-cyan-400" size={20} />
-              <span className="text-sm font-medium text-gray-400">
+              <Zap className="text-accent-primary" size={20} />
+              <span className="text-sm font-medium text-text-secondary">
                 Claude Code Best Practice
               </span>
             </motion.div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="flex items-center justify-center w-9 h-9 rounded-lg bg-bg-card border border-border text-text-secondary hover:text-accent-primary hover:border-accent-primary/50 transition-all duration-200"
+              title={theme === 'dark' ? '切换到白天模式' : '切换到黑夜模式'}
+            >
+              <motion.div
+                initial={false}
+                animate={{ rotate: theme === 'dark' ? 0 : 180 }}
+                transition={{ duration: 0.3 }}
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </motion.div>
+            </button>
+
             <a
               href="https://github.com/shanraisshan/claude-code-best-practice"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-400/10 text-cyan-400 hover:bg-cyan-400/20 transition-colors text-sm"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent-primary/10 text-accent-primary hover:bg-accent-primary/20 transition-colors text-sm"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -108,7 +125,7 @@ function App() {
       {/* Loading screen */}
       {!isLoaded && (
         <motion.div
-          className="fixed inset-0 bg-[#0a0a0f] z-50 flex items-center justify-center"
+          className="fixed inset-0 bg-bg-primary z-50 flex items-center justify-center"
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
@@ -127,7 +144,7 @@ function App() {
               }}
             />
             <motion.p
-              className="text-cyan-400 text-sm font-medium"
+              className="text-accent-primary text-sm font-medium"
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
