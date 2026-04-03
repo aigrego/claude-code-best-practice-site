@@ -10,7 +10,6 @@ import {
   ChevronRight,
   Menu,
   X,
-  Sparkles,
 } from 'lucide-react';
 import type { NavItem } from '../types';
 import { navItems } from '../data/content';
@@ -146,9 +145,11 @@ const Sidebar = ({ activeId, onSelect, isOpen, onToggle }: SidebarProps) => {
         <div className="p-6 border-b border-border">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-600 flex items-center justify-center">
-                <Sparkles className="text-white" size={20} />
-              </div>
+              <img 
+                src="/favicon.svg" 
+                alt="Claude Code" 
+                className="w-10 h-10 rounded-lg"
+              />
               <div className="absolute -inset-1 rounded-lg bg-accent-primary/30 blur-md animate-pulse" />
             </div>
             <div>
